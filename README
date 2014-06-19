@@ -1,0 +1,16 @@
+EmailDownloader is a simple tool that helps you download all the emails (text as well as attachments) on your computer.
+
+You need to run the maildownloader.py file in Python2
+
+You will be prompted to enter your email address and password along with a date range
+
+All the emails in the specified date range from your account will be downloaded to your PC
+
+The script was successfully tested on a gmail account. I have tried to add support for some of the other hosts:
+rediffmail
+yahoomail
+aol
+lycos
+mail
+
+However they may not run successfully.
