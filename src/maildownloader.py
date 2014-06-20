@@ -1,3 +1,6 @@
+#!/usr/bin/python -tt
+# Script by - Rishab Saraf
+# Github profile: rishabsaraf93
 import sys
 import re
 import imaplib
@@ -9,6 +12,9 @@ import os
 from email.parser import Parser
 
 def login(email,password):
+  """
+  Connects to the imap server and logs in to the server. Takes two arguments: email id and password.
+  """
   match_server = re.search(r'\w+@(\w+)\.\w+',email)
   if not match_server:
     sys.stderr.write('\nArghhh! Could not locate the hostname in the email id. Did u specify it for sure?\n')
@@ -48,6 +54,10 @@ def login(email,password):
   return mail
 
 def fetchmail(mail,first,last):
+  """
+  Fetches all the mails in the inbox from a logged in imap server. Takes three arguments: imap server variable, starting date and end date.
+  Internally calls the makefile function.
+  """
   mail.select('inbox')
   day,month,year = comparedate.breakdate(first)
   date = datetime.date(year,month,day).strftime("%d-%b-%Y")
@@ -59,7 +69,7 @@ def fetchmail(mail,first,last):
   uids = idstring.split()
   for i in uids:
     res, data = mail.uid('fetch',i,'(RFC822)')
-    print 'Readin mail id:',i
+    print '\nReading mail with id:',i
     if res != 'OK':
       print 'Error fetching mail'
       continue
@@ -71,9 +81,12 @@ def fetchmail(mail,first,last):
     if checkdate == 1:
       break
     makefile(text,msg,i,date)
-    print 'Processed mail id '+ i + '\n'
+    print 'Processed mail id '+ i
 
 def makefile(text,msg, uid,date):
+  """
+  Downloads the emails to the computer along with the attachments. Takes 4 arguments: text read from the email message, email variable, uid of the email to be downloaded and date of the email as a string.
+  """
   root = msg['from'][:6] + date[:6]
   if not os.path.exists('maildownloads'):
     os.mkdir('maildownloads')
